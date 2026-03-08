@@ -18,7 +18,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-sm">
       <div className="container-site flex h-16 items-center justify-between">
-        <Logo variant="dark" />
+        <Logo />
 
         {/* Desktop */}
         <ul className="hidden gap-8 md:flex">
