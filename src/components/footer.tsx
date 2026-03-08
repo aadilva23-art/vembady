@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-4">
           {/* Brand */}
           <div>
-            <Logo variant="light" />
+            <Logo />
             <p className="mt-3 text-sm leading-relaxed text-gray-400">
               Your trusted kitchen &amp; home store in Thoppumpady, Kochi. Serving families since 2005.
             </p>
