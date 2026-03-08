@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const trust = [
   { number: "20+", label: "Years", sub: "Serving Kochi" },
@@ -111,7 +111,24 @@ function BrandStrip() {
   );
 }
 
+function useStoreOpen() {
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+      const hour = now.getHours();
+      setIsOpen(hour >= 9 && hour < 21);
+    };
+    check();
+    const id = setInterval(check, 60_000);
+    return () => clearInterval(id);
+  }, []);
+  return isOpen;
+}
+
 export default function HomePage() {
+  const isOpen = useStoreOpen();
+
   return (
     <>
       {/* Hero */}
@@ -122,9 +139,9 @@ export default function HomePage() {
         <div className="container-site relative z-10 flex flex-col items-center justify-center pb-8 pt-20 text-center md:pt-28">
           {/* Eyebrow */}
           <div className="mb-6 flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-2 backdrop-blur-sm">
-            <span className="h-2 w-2 rounded-full bg-green-500" />
+            <span className={`h-2 w-2 rounded-full ${isOpen ? "bg-green-500" : "bg-red-400"}`} />
             <span className="text-xs font-medium tracking-wide text-white/70">
-              Open Now &middot; Thoppumpady, Kochi
+              {isOpen ? "Open Now" : "Closed"} &middot; Thoppumpady, Kochi
             </span>
           </div>
 
@@ -278,8 +295,8 @@ export default function HomePage() {
             </a>
           </div>
           <div className="mt-8 inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-xs font-medium text-white/80 backdrop-blur-sm">
-            <span className="h-2 w-2 rounded-full bg-green-400" />
-            Open 9 AM – 9 PM &middot; Every Day &middot; 365 Days
+            <span className={`h-2 w-2 rounded-full ${isOpen ? "bg-green-400" : "bg-red-400"}`} />
+            {isOpen ? "Open Now" : "Closed"} &middot; 9 AM – 9 PM &middot; Every Day &middot; 365 Days
           </div>
           <p className="mt-6 text-xs text-white/40">
             📍 Opp. Bus Stop, Thoppumpady, Kochi 682005
